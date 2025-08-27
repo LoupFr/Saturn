@@ -11,7 +11,7 @@ Saturn is a powerful and user-friendly video splitting tool built with Electron 
 - **Resolution Control**: Original, 1080p, 720p, 480p output options
 - **Output Formats**: MP4, WebM, AVI with optimized settings
 
-### v1.0.0 New Features
+### v1.1.0 New Features
 - ⚙️ **Settings Page**: Complete settings interface with version info
 - 🔄 **Auto-Update System**: Automatic update checking and installation
 - 📋 **Version Management**: Patch notes and changelog display
