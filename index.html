@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -462,6 +462,7 @@
         .update-status {
             margin: 20px 0;
             font-size: 1.1rem;
+            line-height: 1.5;
         }
         
         .danger-zone {
@@ -704,7 +705,7 @@
 
     <div class="language-selector">
         <div class="language-btn" onclick="toggleLanguageDropdown()">
-            <span id="currentLangFlag">🇬🇧</span>
+            <span id="currentLangFlag">🍔</span>
             <span id="currentLangCode">EN</span>
         </div>
         <div class="language-dropdown" id="languageDropdown">
@@ -712,7 +713,7 @@
                 <span>🥐</span><span>Français</span>
             </div>
             <div class="language-option active" onclick="changeLanguage('en')">
-                <span>🇬🇧</span><span>English</span>
+                <span>🍔</span><span>English</span>
             </div>
             <div class="language-option" onclick="changeLanguage('es')">
                 <span>🌮</span><span>Español</span>
@@ -724,10 +725,11 @@
     </div>
 
     <script>
-        console.log('Saturn v1.1 chargé');
+        console.log('Saturn v1.1 chargé avec LoupFr/Saturn');
         
         const { ipcRenderer } = require('electron');
 
+        // TRADUCTIONS COMPLÈTES CORRIGÉES
         const translations = {
             fr: {
                 subtitle: "Découpez vos vidéos longues en clips d'une durée déterminée",
@@ -780,7 +782,11 @@
                 checkUpdateText: "Vérifier les mises à jour",
                 dangerZoneTitle: "⚠️ Zone dangereuse",
                 uninstallText: "Désinstaller Saturn",
-                uninstallWarning: "Ceci supprimera complètement Saturn de votre ordinateur. Vos vidéos traitées ne seront pas supprimées."
+                uninstallWarning: "Ceci supprimera complètement Saturn de votre ordinateur. Vos vidéos traitées ne seront pas supprimées.",
+                updateStatusText: "Cliquer pour vérifier les mises à jour",
+                downloadTitle: "Téléchargement de la mise à jour...",
+                downloadText: "Préparation du téléchargement...",
+                checking: "Vérification..."
             },
             en: {
                 subtitle: "Split your long videos into clips of determined duration",
@@ -833,7 +839,11 @@
                 checkUpdateText: "Check for Updates",
                 dangerZoneTitle: "⚠️ Danger Zone",
                 uninstallText: "Uninstall Saturn",
-                uninstallWarning: "This will completely remove Saturn from your computer. Your processed videos will not be deleted."
+                uninstallWarning: "This will completely remove Saturn from your computer. Your processed videos will not be deleted.",
+                updateStatusText: "Click to check for updates",
+                downloadTitle: "Downloading Update...",
+                downloadText: "Preparing download...",
+                checking: "Checking..."
             },
             es: {
                 subtitle: "Corte sus videos largos en clips de duración determinada",
@@ -886,7 +896,11 @@
                 checkUpdateText: "Buscar actualizaciones",
                 dangerZoneTitle: "⚠️ Zona peligrosa",
                 uninstallText: "Desinstalar Saturn",
-                uninstallWarning: "Esto eliminará completamente Saturn de tu computadora. Tus videos procesados no se eliminarán."
+                uninstallWarning: "Esto eliminará completamente Saturn de tu computadora. Tus videos procesados no se eliminarán.",
+                updateStatusText: "Hacer clic para buscar actualizaciones",
+                downloadTitle: "Descargando actualización...",
+                downloadText: "Preparando descarga...",
+                checking: "Verificando..."
             },
             it: {
                 subtitle: "Taglia i tuoi video lunghi in clip di durata determinata",
@@ -939,7 +953,11 @@
                 checkUpdateText: "Cerca aggiornamenti",
                 dangerZoneTitle: "⚠️ Zona pericolosa",
                 uninstallText: "Disinstalla Saturn",
-                uninstallWarning: "Questo rimuoverà completamente Saturn dal tuo computer. I tuoi video elaborati non verranno eliminati."
+                uninstallWarning: "Questo rimuoverà completamente Saturn dal tuo computer. I tuoi video elaborati non verranno eliminati.",
+                updateStatusText: "Clicca per cercare aggiornamenti",
+                downloadTitle: "Scaricamento aggiornamento...",
+                downloadText: "Preparazione download...",
+                checking: "Controllo..."
             }
         };
 
@@ -1010,35 +1028,44 @@
             document.getElementById('settingsPage').style.display = 'none';
         }
 
-        // Vérification des mises à jour
+        // Vérification des mises à jour CORRIGÉE
         async function checkForUpdates() {
             const checkBtn = document.getElementById('checkUpdateBtn');
             const updateStatus = document.getElementById('updateStatusText');
             
             checkBtn.disabled = true;
-            checkBtn.innerHTML = '🔄 <span>Checking...</span>';
-            updateStatus.textContent = 'Checking for updates...';
+            checkBtn.innerHTML = '🔄 <span>' + t('checking') + '</span>';
+            updateStatus.textContent = t('checking');
+            updateStatus.style.color = '#87ceeb';
             
             try {
                 const updateInfo = await ipcRenderer.invoke('check-for-updates');
+                console.log('Update info reçue:', updateInfo);
                 
                 if (updateInfo.error) {
-                    updateStatus.textContent = '❌ ' + updateInfo.error;
+                    updateStatus.innerHTML = '❌ ' + updateInfo.error;
                     updateStatus.style.color = '#ef4444';
                 } else if (updateInfo.updateAvailable) {
-                    updateStatus.innerHTML = `🆕 Update available: v${updateInfo.latestVersion}<br>
-                        <small>Current: v${updateInfo.currentVersion}</small>`;
-                    updateStatus.style.color = 'rgb(16, 185, 162)';
-                    
-                    checkBtn.innerHTML = '⬇️ <span>Download Update</span>';
-                    checkBtn.onclick = () => downloadUpdate(updateInfo.downloadUrl);
+                    if (updateInfo.hasInstaller) {
+                        updateStatus.innerHTML = `🆕 Mise à jour disponible: v${updateInfo.latestVersion}<br>
+                            <small>Actuelle: v${updateInfo.currentVersion}</small>`;
+                        updateStatus.style.color = 'rgb(16, 185, 162)';
+                        
+                        checkBtn.innerHTML = '⬇️ <span>Télécharger la mise à jour</span>';
+                        checkBtn.onclick = () => downloadUpdate(updateInfo.downloadUrl);
+                    } else {
+                        updateStatus.innerHTML = `🆕 v${updateInfo.latestVersion} disponible mais aucun installateur trouvé<br>
+                            <small>Vérifiez GitHub manuellement</small>`;
+                        updateStatus.style.color = '#f59e0b';
+                    }
                 } else {
-                    updateStatus.textContent = `✅ You have the latest version (v${updateInfo.currentVersion})`;
+                    updateStatus.innerHTML = `✅ Vous avez la dernière version (v${updateInfo.currentVersion})`;
                     updateStatus.style.color = 'rgb(16, 185, 162)';
                 }
                 
             } catch (error) {
-                updateStatus.textContent = '❌ Failed to check for updates';
+                console.error('Erreur vérification:', error);
+                updateStatus.innerHTML = '❌ Erreur lors de la vérification: ' + error.message;
                 updateStatus.style.color = '#ef4444';
             }
             
@@ -1059,7 +1086,7 @@
             try {
                 await ipcRenderer.invoke('download-update', downloadUrl);
             } catch (error) {
-                downloadText.textContent = '❌ Download failed: ' + error.message;
+                downloadText.textContent = '❌ Téléchargement échoué: ' + error.message;
                 downloadText.style.color = '#ef4444';
             }
         }
@@ -1069,10 +1096,10 @@
             try {
                 const result = await ipcRenderer.invoke('uninstall-saturn');
                 if (result && !result.cancelled) {
-                    showStatus('🗑️ Saturn is being uninstalled...', 'info');
+                    showStatus('🗑️ Saturn est en cours de désinstallation...', 'info');
                 }
             } catch (error) {
-                showStatus('❌ Failed to uninstall: ' + error.message, 'error');
+                showStatus('❌ Échec de la désinstallation: ' + error.message, 'error');
             }
         }
 
@@ -1088,7 +1115,7 @@
             
             const downloaded = (data.downloaded / (1024 * 1024)).toFixed(1);
             const total = (data.totalSize / (1024 * 1024)).toFixed(1);
-            downloadText.textContent = `Downloaded: ${downloaded} MB / ${total} MB`;
+            downloadText.textContent = 'Téléchargé: ' + downloaded + ' MB / ' + total + ' MB';
         });
 
         function checkCanProcess() {
@@ -1208,6 +1235,9 @@
             document.getElementById('dangerZoneTitle').textContent = t('dangerZoneTitle');
             document.getElementById('uninstallText').textContent = t('uninstallText');
             document.getElementById('uninstallWarning').textContent = t('uninstallWarning');
+            document.getElementById('updateStatusText').textContent = t('updateStatusText');
+            document.getElementById('downloadTitle').textContent = t('downloadTitle');
+            document.getElementById('downloadText').textContent = t('downloadText');
             
             updateSelectOptions();
             
@@ -1343,7 +1373,7 @@
         function changeLanguage(lang) {
             currentLanguage = lang;
             
-            const flags = { 'fr': '🥐', 'en': '🇬🇧', 'es': '🌮', 'it': '🍕' };
+            const flags = { 'fr': '🥐', 'en': '🍔', 'es': '🌮', 'it': '🍕' };
             
             document.getElementById('currentLangFlag').textContent = flags[lang];
             document.getElementById('currentLangCode').textContent = lang.toUpperCase();

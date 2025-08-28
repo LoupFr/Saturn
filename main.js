@@ -6,7 +6,7 @@ const fs = require('fs');
 const https = require('https');
 
 const CURRENT_VERSION = '1.1.0';
-const GITHUB_REPO = 'LoupFr/Saturn'; // À CHANGER
+const GITHUB_REPO = 'LoupFr/Saturn'; // Configuration corrigée
 const UPDATE_CHECK_URL = `https://api.github.com/repos/${GITHUB_REPO}/releases/latest`;
 
 const MAX_CONCURRENT_CLIPS = Math.min(os.cpus().length, 6);
@@ -64,7 +64,7 @@ app.on('window-all-closed', () => {
 
 // Gestion des mises à jour
 ipcMain.handle('check-for-updates', async () => {
-  console.log('Vérification des mises à jour...');
+  console.log('Vérification des mises à jour sur:', UPDATE_CHECK_URL);
   
   return new Promise((resolve) => {
     https.get(UPDATE_CHECK_URL, {
@@ -79,32 +79,63 @@ ipcMain.handle('check-for-updates', async () => {
       res.on('end', () => {
         try {
           const release = JSON.parse(data);
-          const latestVersion = release.tag_name.replace('v', '');
+          
+          if (release.message && release.message.includes('Not Found')) {
+            resolve({
+              error: 'Repository Saturn non trouvé. Vérifiez que LoupFr/Saturn existe sur GitHub.',
+              currentVersion: CURRENT_VERSION
+            });
+            return;
+          }
+          
+          const latestVersion = release.tag_name ? release.tag_name.replace('v', '') : null;
+          
+          if (!latestVersion) {
+            resolve({
+              error: 'Aucune version trouvée dans le repository',
+              currentVersion: CURRENT_VERSION
+            });
+            return;
+          }
           
           const updateAvailable = compareVersions(latestVersion, CURRENT_VERSION) > 0;
+          
+          // Chercher un asset .exe dans la release
+          const exeAsset = release.assets ? release.assets.find(asset => 
+            asset.name.toLowerCase().includes('.exe') || 
+            asset.name.toLowerCase().includes('setup')
+          ) : null;
           
           resolve({
             currentVersion: CURRENT_VERSION,
             latestVersion,
             updateAvailable,
-            downloadUrl: release.assets[0]?.browser_download_url || null,
+            downloadUrl: exeAsset ? exeAsset.browser_download_url : null,
             releaseNotes: release.body || 'Aucune note de version disponible',
-            publishedAt: release.published_at
+            publishedAt: release.published_at,
+            hasInstaller: !!exeAsset
           });
         } catch (error) {
           console.error('Erreur parsing update:', error);
           resolve({
-            error: 'Impossible de vérifier les mises à jour',
+            error: 'Erreur lors de l\'analyse de la réponse GitHub: ' + error.message,
             currentVersion: CURRENT_VERSION
           });
         }
       });
     }).on('error', (error) => {
       console.error('Erreur vérification update:', error);
-      resolve({
-        error: 'Impossible de vérifier les mises à jour (pas d\'internet?)',
-        currentVersion: CURRENT_VERSION
-      });
+      if (error.code === 'ENOTFOUND') {
+        resolve({
+          error: 'Pas de connexion internet ou DNS inaccessible',
+          currentVersion: CURRENT_VERSION
+        });
+      } else {
+        resolve({
+          error: 'Erreur réseau: ' + error.message,
+          currentVersion: CURRENT_VERSION
+        });
+      }
     });
   });
 });
@@ -139,6 +170,11 @@ ipcMain.handle('download-update', async (event, downloadUrl) => {
   
   return new Promise((resolve, reject) => {
     https.get(downloadUrl, (response) => {
+      if (response.statusCode !== 200) {
+        reject(new Error('Impossible de télécharger: HTTP ' + response.statusCode));
+        return;
+      }
+      
       const file = fs.createWriteStream(updateFile);
       const totalSize = parseInt(response.headers['content-length'], 10);
       let downloaded = 0;
@@ -157,7 +193,9 @@ ipcMain.handle('download-update', async (event, downloadUrl) => {
         // Lancer l'installateur
         shell.openPath(updateFile).then(() => {
           // Fermer Saturn pour permettre la mise à jour
-          app.quit();
+          setTimeout(() => {
+            app.quit();
+          }, 1000);
         });
         
         resolve({ success: true, filePath: updateFile });
@@ -224,7 +262,7 @@ ipcMain.handle('get-system-info', async () => {
   };
 });
 
-// Reste du code main.js existant...
+// Reste du code identique à la V1.0...
 ipcMain.handle('select-video-file', async () => {
   console.log('Sélection vidéo');
   try {
@@ -518,4 +556,4 @@ ipcMain.handle('play-video', async (event, videoPath) => {
   shell.openPath(videoPath);
 });
 
-console.log('Saturn Main Process configuré avec système de mise à jour');
+console.log('Saturn Main Process configuré avec LoupFr/Saturn');

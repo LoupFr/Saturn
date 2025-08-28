@@ -1,140 +1,169 @@
 # 🪐 Saturn Video Splitter
 
-Saturn is a powerful and user-friendly video splitting tool built with Electron and FFmpeg. Split your long videos into clips of determined duration with high quality and performance.
+Saturn is a powerful video splitting tool built with Electron and FFmpeg. Split your long videos into clips with high quality and performance.
+
+**Repository**: LoupFr/Saturn
+**Version**: 1.1.0 (Corrected)
+**Auto-Update**: ✅ Enabled
 
 ## ✨ Features
 
 ### Core Functionality
-- **Smart Video Splitting**: Split videos into clips of custom duration (1-600 seconds)
-- **Multiple Formats**: Support for MP4, AVI, MKV, MOV, WebM, FLV, M4V
-- **Quality Options**: 4 quality presets from fast/light to maximum quality
-- **Resolution Control**: Original, 1080p, 720p, 480p output options
+- **Smart Video Splitting**: Custom duration clips (1-600 seconds)
+- **Multiple Formats**: MP4, AVI, MKV, MOV, WebM, FLV, M4V support
+- **Quality Options**: 4 presets from fast/light to maximum quality
+- **Resolution Control**: Original, 1080p, 720p, 480p options
 - **Output Formats**: MP4, WebM, AVI with optimized settings
 
-### v1.1.0 New Features
-- ⚙️ **Settings Page**: Complete settings interface with version info
-- 🔄 **Auto-Update System**: Automatic update checking and installation
-- 📋 **Version Management**: Patch notes and changelog display
-- 🗑️ **Uninstall Feature**: Clean uninstallation with confirmation
-- 📡 **GitHub Integration**: Seamless updates from GitHub releases
+### v1.1.0 Corrections
+- ✅ **GitHub Configuration**: Pre-configured for LoupFr/Saturn
+- ✅ **Complete Translations**: All UI elements in 4 languages
+- ✅ **Fixed English Emoji**: 🍔 restored for English language
+- ✅ **Error Handling**: Better error messages for updates
+- ✅ **Settings Interface**: Fully translated settings page
 
-### Interface & Experience
-- **Multilingual**: English, French, Spanish, Italian
+### Interface
+- **Multilingual**: English (🍔), French (🥐), Spanish (🌮), Italian (🍕)
 - **Modern UI**: Dark theme with smooth animations
-- **Real-time Progress**: Live progress tracking during processing
-- **Batch Processing**: Parallel clip processing for speed
-- **Discord Community**: Direct access to support community
+- **Real-time Progress**: Live progress tracking
+- **Auto-Update**: Seamless updates from GitHub
+- **Settings Page**: Complete version info and controls
 
 ## 🚀 Quick Start
 
-### Installation
-1. Download the latest Saturn-Setup.exe from GitHub Releases
-2. Run the installer and follow the setup wizard
-3. Launch Saturn from your desktop or start menu
+### Download & Install
+1. Download Saturn-Setup.exe from GitHub Releases
+2. Run installer and follow setup wizard
+3. Launch Saturn from desktop or start menu
 
 ### Usage
-1. **Select Video**: Click to browse and select your video file
-2. **Output Folder**: Choose where to save the split clips
-3. **Duration**: Set the desired clip duration in seconds
-4. **Quality Settings**: Choose quality, resolution, and format
-5. **Split**: Click the split button and wait for processing
-6. **Results**: View, play, or locate your generated clips
+1. **Select Video**: Browse and select your video file
+2. **Output Folder**: Choose save location
+3. **Duration**: Set clip duration in seconds
+4. **Settings**: Choose quality, resolution, format
+5. **Split**: Process and generate clips
+6. **Results**: Play, locate, or manage your clips
 
 ## 🔧 Development
 
-### Prerequisites
+### Build Requirements
 - Node.js 16+
 - npm or yarn
-- Git (for cloning)
+- Git
 
 ### Setup
 ```bash
-git clone https://github.com/your-username/saturn-video-splitter.git
-cd saturn-video-splitter
+git clone https://github.com/LoupFr/Saturn.git
+cd Saturn
 npm install
 ```
 
-### Build Application
+### Build Commands
 ```bash
-npm run package  # Creates portable version
-npm run build    # Creates installer
+npm start          # Development mode
+npm run package    # Portable version
+npm run build      # Installer (.exe)
+npm run release    # Build & publish
 ```
-
-## 📦 Technical Details
-
-### Built With
-- **Electron**: Cross-platform desktop application framework
-- **FFmpeg**: Video processing engine with full codec support
-- **Node.js**: Backend processing and file system operations
-- **HTML/CSS/JS**: Modern web technologies for the interface
-
-### Performance
-- **Multi-threading**: Utilizes all CPU cores for faster processing
-- **Memory Efficient**: Optimized for large video files
-- **Stream Copy**: Smart codec detection for faster processing when possible
-- **Batch Processing**: Multiple clips processed simultaneously
-
-## 🌍 Internationalization
-
-Saturn supports 4 languages out of the box:
-- **English** (Default)
-- **Français** (French)
-- **Español** (Spanish)
-- **Italiano** (Italian)
-
-Language switching is persistent and affects all UI elements.
 
 ## 🔄 Auto-Update System
 
-Saturn v1.1.0 introduces a complete auto-update system:
+Saturn automatically checks for updates from the LoupFr/Saturn repository.
 
 ### For Users
-- **Automatic Detection**: Saturn checks GitHub for new versions
-- **One-Click Updates**: Download and install updates with one click
+- **Settings Page**: Click ⚙️ button → Check for Updates
+- **Automatic Detection**: Compares with GitHub releases
+- **One-Click Install**: Download and install updates easily
 - **Progress Tracking**: Real-time download progress
-- **Safe Installation**: Updates are verified before installation
 
 ### For Developers
-- **GitHub Integration**: Releases are pulled from GitHub API
-- **Semantic Versioning**: Proper version comparison
-- **Asset Management**: Automatic installer download from releases
-- **Cross-Platform**: Works on Windows with plans for macOS/Linux
+- **GitHub Integration**: Uses GitHub Releases API
+- **Version Comparison**: Semantic versioning support
+- **Asset Detection**: Finds .exe installers automatically
+- **Error Handling**: Clear error messages for diagnostics
+
+## 🛠️ Configuration
+
+### Pre-configured Settings
+- **GitHub Repository**: LoupFr/Saturn (ready to use)
+- **Update URL**: https://api.github.com/repos/LoupFr/Saturn/releases/latest
+- **Languages**: EN (🍔), FR (🥐), ES (🌮), IT (🍕)
+- **Default Quality**: Balanced (recommended)
+
+### Custom Options
+- **Clip Duration**: 1-600 seconds (default: 61)
+- **Video Quality**: Fast, Balanced, High, Maximum
+- **Resolution**: 480p, 720p, 1080p, Original
+- **Format**: MP4, WebM, AVI
 
 ## 📋 Changelog
 
-### v1.1.0 (Latest)
-- ✨ Added complete Settings page with version information
-- 🔄 Integrated automatic update system with GitHub
-- 🗑️ Added uninstall feature with safety confirmation
-- 📡 GitHub API integration for version checking
-- 🎯 Enhanced UI responsiveness and error handling
-- 🌐 Extended multilingual support to settings page
-- 🐛 Fixed minor bugs and improved performance
+### v1.1.0 - Corrected Version
+- ✅ Pre-configured GitHub repository (LoupFr/Saturn)
+- ✅ Complete interface translations (all 4 languages)
+- ✅ Restored English emoji (🍔)
+- ✅ Enhanced error handling for updates
+- ✅ Improved settings page translations
+- ✅ Better diagnostic messages
+- ✅ Fixed update status display
 
-### v1.0.0
+### v1.0.0 - Initial Release
 - 🎬 Core video splitting functionality
 - 🎨 Modern dark UI with animations
-- 🌍 4-language support (EN/FR/ES/IT)
+- 🌍 Multi-language support
 - ⚡ Multi-threaded processing
 - 📁 Batch clip management
-- 🎮 Discord community integration
 
-## 🤝 Community & Support
+## 🔍 Troubleshooting
+
+### Update Issues
+If you see 'Impossible de vérifier les mises à jour':
+
+1. **Check Repository**: Ensure https://github.com/LoupFr/Saturn exists
+2. **Check Release**: Verify v1.1.0 release exists with .exe file
+3. **Test API**: Visit https://api.github.com/repos/LoupFr/Saturn/releases/latest
+4. **Check Network**: Ensure internet connection is working
+
+### Expected API Response
+```json
+{
+  "tag_name": "v1.1.0",
+  "name": "Saturn v1.1.0",
+  "assets": [
+    {
+      "name": "Saturn-Setup.exe",
+      "browser_download_url": "..."
+    }
+  ]
+}
+```
+
+## 🤝 Support
 
 - **Discord**: Join our community at discord.gg/qQHNQqSjJR
 - **Issues**: Report bugs on GitHub Issues
-- **Discussions**: Feature requests and community discussions on GitHub
+- **Repository**: https://github.com/LoupFr/Saturn
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+MIT License - Free and Open Source
 
-## ⚖️ Legal Notice
+## 🏗️ Technical Details
 
-Saturn is provided as is, without warranty of any kind. Users are responsible for compliance with all applicable laws regarding video processing and distribution.
+### Built With
+- **Electron**: Desktop application framework
+- **FFmpeg**: Video processing engine
+- **Node.js**: Backend processing
+- **HTML/CSS/JS**: Modern web interface
+
+### Performance
+- **Multi-threading**: Uses all CPU cores
+- **Memory Efficient**: Optimized for large files
+- **Smart Codec**: Stream copy when possible
+- **Batch Processing**: Multiple clips simultaneously
 
 ---
 
-**Made with ❤️ by the Saturn Team**
+**Configured for LoupFr/Saturn** | **Ready for Auto-Updates** | **v1.1.0 Corrected**
 
 *Split your videos, keep your quality, save your time.*

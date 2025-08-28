@@ -1,7 +1,7 @@
 @echo off
 echo.
-echo SATURN V1.1 - CONSTRUCTION AVEC MISE À JOUR
-echo ==========================================
+echo SATURN V1.1 - CONSTRUCTION CORRIGÉE
+echo ===================================
 echo.
 
 if not exist "assets\icon.ico" (
@@ -35,29 +35,24 @@ echo.
 echo SATURN V1.1 CRÉÉ AVEC SUCCÈS !
 echo.
 echo Application : dist\Saturn-win32-x64\Saturn.exe
-echo Nom : Saturn
+echo Configuration GitHub : LoupFr/Saturn
 echo Taille : ~150-200 MB (FFmpeg inclus)
 echo.
-echo NOUVEAUTÉS V1.1 :
-echo ================
-echo ⚙️ Page Paramètres avec bouton en haut à gauche
-echo 📋 Informations de version et patch notes
-echo 🔄 Système de mise à jour automatique intégré
-echo 🗑️ Bouton de désinstallation avec confirmation
-echo 📡 Vérification des updates depuis GitHub
-echo 🌐 Interface mise à jour dans toutes les langues
+echo CORRECTIONS APPORTÉES :
+echo ======================
+echo ✅ Configuration GitHub : LoupFr/Saturn
+echo ✅ Traductions corrigées dans toutes les langues
+echo ✅ Emoji anglais restauré : 🍔
+echo ✅ Gestion d'erreurs améliorée pour les mises à jour
+echo ✅ Messages d'erreur plus clairs
+echo ✅ Interface paramètres complètement traduite
 echo.
-echo VOTRE SATURN V1.1 EST PRÊT !
-echo ===========================
+echo VOTRE SATURN V1.1 CORRIGÉ EST PRÊT !
+echo ===================================
 echo Allez dans : dist\Saturn-win32-x64\
 echo Lancez : Saturn.exe
 echo Partagez : Tout le dossier Saturn-win32-x64
 echo.
-echo ⚠️ IMPORTANT pour les mises à jour :
-echo 1. Créez un repository GitHub (voir instructions)
-echo 2. Modifiez le fichier main.js avec votre repo
-echo 3. Publiez les releases sur GitHub
-echo.
-echo Interface complète avec paramètres et auto-update
+echo Système de mise à jour configuré pour : LoupFr/Saturn
 
 pause
