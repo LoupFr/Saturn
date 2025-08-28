@@ -98,7 +98,7 @@ Saturn automatically checks for updates from the LoupFr/Saturn repository.
 
 ## 📋 Changelog
 
-### v1.1.0 - Corrected Version
+### v1.1.1 - Corrected Version
 - ✅ Pre-configured GitHub repository (LoupFr/Saturn)
 - ✅ Complete interface translations (all 4 languages)
 - ✅ Restored English emoji (🍔)
