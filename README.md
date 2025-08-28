@@ -3,7 +3,7 @@
 Saturn is a powerful video splitting tool built with Electron and FFmpeg. Split your long videos into clips with high quality and performance.
 
 **Repository**: LoupFr/Saturn
-**Version**: 1.1.0 (Corrected)
+**Version**: 1.1.1 (Corrected)
 **Auto-Update**: ✅ Enabled
 
 ## ✨ Features
@@ -15,7 +15,7 @@ Saturn is a powerful video splitting tool built with Electron and FFmpeg. Split 
 - **Resolution Control**: Original, 1080p, 720p, 480p options
 - **Output Formats**: MP4, WebM, AVI with optimized settings
 
-### v1.1.0 Corrections
+### v1.1.1Corrections
 - ✅ **GitHub Configuration**: Pre-configured for LoupFr/Saturn
 - ✅ **Complete Translations**: All UI elements in 4 languages
 - ✅ **Fixed English Emoji**: 🍔 restored for English language
